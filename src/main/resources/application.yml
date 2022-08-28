@@ -1,0 +1,26 @@
+server:
+   port: 8080
+spring:
+   datasource:
+      driver-class-name: org.h2.Driver
+      url: jdbc:h2:mem:memdb
+      username: sa
+      password: password
+   jpa:
+      hibernate:
+         ddl-auto: create-drop
+         database-platform: org.hibernate.dialect.H2Dialect
+         defer-datasource-initialization: true
+         open-in-view: true
+         properties:
+            hibernate.format_sql: true
+   h2:
+      console.enabled: true
+   devtools:
+      restart.enabled: false
+   logging:
+      file.name: logs/application-debug.log
+      level:
+      web: debug
+   jwt.secret: ${JWT_SECRET}
+   pokepost.frontend.url: ${POKEPOST_URL}
