@@ -2,11 +2,13 @@ package com.personal.revaturep2pokepostbe.services;
 
 import java.util.List;
 
-import com.personal.revaturep2pokepostbe.models.ArtComment;
 import com.personal.revaturep2pokepostbe.models.Fanart;
-import com.personal.revaturep2pokepostbe.models.RateArtComm;
-import com.personal.revaturep2pokepostbe.models.ReportArtComm;
 
+/**
+ * An interface to be followed by FanartService
+ * @author Barry Norton
+ *
+ */
 public interface FanartInterface {
 	/**
 	 * Saves a fanart to the database
