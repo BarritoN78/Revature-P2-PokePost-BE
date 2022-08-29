@@ -8,4 +8,12 @@ import com.personal.revaturep2pokepostbe.models.RateFanart;
 @Repository
 public interface RateFanartRepository extends JpaRepository<RateFanart, Integer>{
 
+	/**
+	 * Deletes a rating on a given fanart made by a given user
+	 * @param artID
+	 * @param userID
+	 * @return
+	 */
+	boolean deleteByArtIDAndUserID(int artID, int userID);
+
 }

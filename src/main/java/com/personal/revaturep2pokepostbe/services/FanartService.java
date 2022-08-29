@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
+import com.personal.revaturep2pokepostbe.repositories.FanartRepository;
+import com.personal.revaturep2pokepostbe.repositories.RateFanartRepository;
+import com.personal.revaturep2pokepostbe.repositories.ReportFanartRepository;
 
 /**
  * A service class for the manipulation of fanart
@@ -15,53 +18,66 @@ import com.personal.revaturep2pokepostbe.models.ReportFanart;
  */
 @Service
 public class FanartService implements FanartInterface{
+	private final FanartRepository artRepo;
+	private final RateFanartRepository rateArtRepo;
+	private final ReportFanartRepository reportArtRepo;
+	
+	public FanartService(FanartRepository artRepo, RateFanartRepository rateArtRepo, ReportFanartRepository reportArtRepo) {
+		this.artRepo = artRepo;
+		this.rateArtRepo = rateArtRepo;
+		this.reportArtRepo = reportArtRepo;
+		
+	}
 
 	@Override
 	public Fanart postFanart(Fanart newFanart) {
-		// TODO Auto-generated method stub
-		return null;
+		return artRepo.save(newFanart);
 	}
 
 	@Override
 	public boolean deleteFanart(int artID) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			artRepo.deleteById(artID);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public Fanart getFanartByID(int artID) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return artRepo.findById(artID).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Fanart> getAllFanart() {
-		// TODO Auto-generated method stub
-		return null;
+		return artRepo.findAll();
 	}
 
 	@Override
 	public RateFanart rateFanart(RateFanart newRateArtComm) {
-		// TODO Auto-generated method stub
-		return null;
+		return rateArtRepo.save(newRateArtComm);
 	}
 
 	@Override
-	public boolean unrateFanart(int commentID, int userID) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean unrateFanart(int artID, int userID) {
+		return rateArtRepo.deleteByArtIDAndUserID(artID, userID);
 	}
 
 	@Override
 	public ReportFanart reportFanart(ReportFanart newReportArtComm) {
-		// TODO Auto-generated method stub
-		return null;
+		return reportArtRepo.save(newReportArtComm);
 	}
 
 	@Override 
-	public boolean unreportFanart(int commentID, int userID) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean unreportFanart(int artID, int userID) {
+		return reportArtRepo.deleteByArtIDAndUserID(artID, userID);
 	}
 
 }
