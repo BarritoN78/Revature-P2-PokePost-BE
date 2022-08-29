@@ -2,6 +2,8 @@ package com.personal.revaturep2pokepostbe.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.personal.revaturep2pokepostbe.models.PokeComment;
 import com.personal.revaturep2pokepostbe.models.RatePokeComm;
 import com.personal.revaturep2pokepostbe.models.ReportPokeComm;
@@ -11,6 +13,7 @@ import com.personal.revaturep2pokepostbe.models.ReportPokeComm;
  * @author Barry Norton
  *
  */
+@Service
 public class PokeCommService implements PokeCommInterface{
 
 	@Override

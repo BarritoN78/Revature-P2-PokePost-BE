@@ -1,8 +1,16 @@
 package com.personal.revaturep2pokepostbe.services;
 
+import org.springframework.stereotype.Service;
+
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
 
+/**
+ * A service class for the manipulation of users
+ * @author Barry Norton
+ *
+ */
+@Service
 public class UserService implements UserInterface{
 
 	@Override

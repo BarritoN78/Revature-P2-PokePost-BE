@@ -2,8 +2,16 @@ package com.personal.revaturep2pokepostbe.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.personal.revaturep2pokepostbe.models.Wishlist;
 
+/**
+ * A service class for the manipulation of wishlists
+ * @author Barry Norton
+ *
+ */
+@Service
 public class WishlistService implements WishlistInterface{
 
 	@Override

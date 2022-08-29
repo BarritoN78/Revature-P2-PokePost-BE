@@ -2,10 +2,18 @@ package com.personal.revaturep2pokepostbe.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
 
+/**
+ * A service class for the manipulation of fanart
+ * @author Barry Norton
+ *
+ */
+@Service
 public class FanartService implements FanartInterface{
 
 	@Override
