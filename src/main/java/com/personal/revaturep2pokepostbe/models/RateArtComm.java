@@ -7,5 +7,7 @@ import lombok.Data;
 @Data
 @Entity
 public class RateArtComm {
-
+	private int id;
+	private int commentID;
+	private int userID;
 }
