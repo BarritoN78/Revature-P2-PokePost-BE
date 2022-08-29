@@ -6,9 +6,8 @@ import lombok.Data;
 
 @Data
 @Entity
-public class ReportArtComm {
+public class RateFanart {
 	private int id;
-	private int commentID;
+	private int artID;
 	private int userID;
-	private String reason;
 }
