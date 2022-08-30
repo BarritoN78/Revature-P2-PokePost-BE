@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,21 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String role;
+	
+	/*Custom Constructor*/
+	
+	/**
+	 * Converts a UserDTO object into a User object
+	 * @param userDTO
+	 */
+	public User(UserDTO userDTO) {
+		this.id = userDTO.getId();
+		this.email = userDTO.getEmail();
+		this.username = userDTO.getUsername();
+		this.password = "";
+		this.profileImage = userDTO.getProfileImage();
+		this.firstName = userDTO.getFirstName();
+		this.lastName = userDTO.getLastName();
+		this.role = "";
+	}
 }
