@@ -8,4 +8,6 @@ import com.personal.revaturep2pokepostbe.models.RatePokeComm;
 @Repository
 public interface RatePokeCommRepository extends JpaRepository<RatePokeComm, Integer>{
 
+	boolean deleteByCommentIDAndUserID(int commentID, int userID);
+
 }

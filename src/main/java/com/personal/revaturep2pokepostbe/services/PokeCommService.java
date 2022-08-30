@@ -7,55 +7,68 @@ import org.springframework.stereotype.Service;
 import com.personal.revaturep2pokepostbe.models.PokeComment;
 import com.personal.revaturep2pokepostbe.models.RatePokeComm;
 import com.personal.revaturep2pokepostbe.models.ReportPokeComm;
+import com.personal.revaturep2pokepostbe.repositories.PokeCommRepository;
+import com.personal.revaturep2pokepostbe.repositories.RatePokeCommRepository;
+import com.personal.revaturep2pokepostbe.repositories.ReportPokeCommRepository;
 
 /**
  * A service class for the manipulation of pokemon comments
+ * 
  * @author Barry Norton
  *
  */
 @Service
-public class PokeCommService implements PokeCommInterface{
+public class PokeCommService implements PokeCommInterface {
+	private final PokeCommRepository pokeCommRepo;
+	private final RatePokeCommRepository ratePokeCommRepo;
+	private final ReportPokeCommRepository reportPokeCommRepo;
+
+	public PokeCommService(PokeCommRepository PokeCommRepo, RatePokeCommRepository ratePokeCommRepo,
+			ReportPokeCommRepository reportPokeCommRepo) {
+		this.pokeCommRepo = PokeCommRepo;
+		this.ratePokeCommRepo = ratePokeCommRepo;
+		this.reportPokeCommRepo = reportPokeCommRepo;
+	}
 
 	@Override
 	public RatePokeComm ratePokeComment(RatePokeComm ratePokeComm) {
-		// TODO Auto-generated method stub
-		return null;
+		return ratePokeCommRepo.save(ratePokeComm);
 	}
 
 	@Override
 	public boolean unratePokeComment(int commentID, int userID) {
-		// TODO Auto-generated method stub
-		return false;
+		return ratePokeCommRepo.deleteByCommentIDAndUserID(commentID, userID);
 	}
 
 	@Override
 	public ReportPokeComm reportPokeComment(ReportPokeComm reportPokeComm) {
-		// TODO Auto-generated method stub
-		return null;
+		return reportPokeCommRepo.save(reportPokeComm);
 	}
 
 	@Override
 	public boolean unreportPokeComment(int commentID, int userID) {
-		// TODO Auto-generated method stub
-		return false;
+		return reportPokeCommRepo.deleteByCommentIDAndUserID(commentID, userID);
 	}
 
 	@Override
-	public List<PokeComment> getAllPokeComments(int pokemonID) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PokeComment> getAllPokeComments(int PokeID) {
+		return pokeCommRepo.findAll();
 	}
 
 	@Override
-	public PokeComment postPokeComment(PokeComment pokeComm) {
-		// TODO Auto-generated method stub
-		return null;
+	public PokeComment postPokeComment(PokeComment PokeComm) {
+		return pokeCommRepo.save(PokeComm);
 	}
 
 	@Override
 	public boolean deletePokeComment(int commentID) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			pokeCommRepo.deleteById(commentID);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
