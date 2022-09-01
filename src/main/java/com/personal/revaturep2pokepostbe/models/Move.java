@@ -9,7 +9,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Move {
     private String name;
-    private String url;
-    private String typeOfMove;
-    private int levelLearnedAt;
 }

@@ -23,10 +23,7 @@ public class Pokemon {
 
 	@Column(name="name")
     private String name;
-
-	@Column(name="gen")
-    private int generation;
-
+	
 	@Column(name="sprite")
 	private String imageUrl;
 
@@ -41,25 +38,10 @@ public class Pokemon {
 
 	@Transient
 	private Map<String, Integer> baseStats;
-
-	@Transient
-    private String category;
-
-	@Transient
-    private String description;
-
-	@Transient
-    private List<String[]> evolutionChain;
-
-    @Transient
-    private List<Map<String, String>> locationVersions;
-
-    @Transient
-    private int baseExperience;
     
     @Transient
     private List<Ability> abilities;
 
     @Transient
-    private PokemonMoves moves;
+    private List<Move> moves;
 }

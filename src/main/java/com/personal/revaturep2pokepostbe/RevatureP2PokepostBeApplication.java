@@ -9,5 +9,4 @@ public class RevatureP2PokepostBeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RevatureP2PokepostBeApplication.class, args);
 	}
-
 }
