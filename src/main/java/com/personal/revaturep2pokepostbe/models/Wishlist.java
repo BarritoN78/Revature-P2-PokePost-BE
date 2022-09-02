@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.personal.revaturep2pokepostbe.models.dtos.PokemonIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +22,7 @@ public class Wishlist {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@ManyToMany(targetEntity = Pokemon.class)
-	private int pokeID;
+	private PokemonIDDTO pokeID;
 	@ManyToMany(targetEntity = User.class)
-	private int userID;
+	private UserIDDTO userID;
 }

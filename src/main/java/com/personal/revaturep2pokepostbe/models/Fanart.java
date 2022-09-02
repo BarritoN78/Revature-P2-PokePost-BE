@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class Fanart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@ManyToOne(targetEntity = User.class)
-	private int author;
+	private UserIDDTO author;
 	private String imageURL;
 	private String title;
 	private String tags;

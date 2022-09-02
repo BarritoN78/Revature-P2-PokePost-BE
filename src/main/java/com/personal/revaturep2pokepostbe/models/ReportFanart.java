@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.personal.revaturep2pokepostbe.models.dtos.ArtCommIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,9 +21,9 @@ public class ReportFanart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToMany(targetEntity = Fanart.class)
-	private int artID;
-	@ManyToMany(targetEntity = User.class)
-	private int userID;
+	@ManyToMany
+	private ArtCommIDDTO artID;
+	@ManyToMany
+	private UserIDDTO userID;
 	private String reason;
 }

@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.personal.revaturep2pokepostbe.models.dtos.ArtIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +23,10 @@ public class ArtComment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToMany(targetEntity = Fanart.class)
-	private int artId;
-	@ManyToMany(targetEntity = User.class)
-	private int author;
+	@ManyToMany
+	private ArtIDDTO artId;
+	@ManyToMany
+	private UserIDDTO author;
 	private String content;
 	private int likes;
 	private int reports;
