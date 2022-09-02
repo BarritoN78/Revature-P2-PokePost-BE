@@ -55,18 +55,4 @@ public interface PokemonInterface {
 	 * @return
 	 */
 	public List<Move> getMoves(JsonNode node);
-	
-	/**
-	 * Retrieves a pokemon's info and converts it into a SQL statement
-	 * This is purely so I can add it to a database to be persisted. I will be deleting this from the code when I am done with it.
-	 * @return
-	 */
-	public String getPokemonSQL(int pokeId);
-	
-	/**
-	 * Retrieves the information of all pokemon from PokeAPI
-	 * Similar to getPokemonSQL, this will be deleted
-	 * @return
-	 */
-	public String getAllPokemonSQL();
 }

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.personal.revaturep2pokepostbe.models.dtos.PokemonIDDTO;
 import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
@@ -23,9 +24,9 @@ public class PokeComment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToMany
+	@ManyToOne
 	private PokemonIDDTO pokeID;
-	@ManyToMany
+	@ManyToOne
 	private UserIDDTO author;
 	private String content;
 	private int likes;

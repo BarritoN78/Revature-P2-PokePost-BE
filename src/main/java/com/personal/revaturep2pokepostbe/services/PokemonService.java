@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -14,6 +15,7 @@ import com.personal.revaturep2pokepostbe.models.Move;
 import com.personal.revaturep2pokepostbe.models.Pokemon;
 import com.personal.revaturep2pokepostbe.repositories.PokemonRepository;
 
+@Service
 public class PokemonService implements PokemonInterface {
 	private final PokemonRepository pokeRepo;
 	private final WebClient client;
@@ -28,7 +30,7 @@ public class PokemonService implements PokemonInterface {
 	@Override
 	public Pokemon getPokemon(String pokemon) {
 		Pokemon result = null;
-		String uri = "https://pokeapi.co/api/v2/" + pokemon;
+		String uri = "https://pokeapi.co/api/v2/pokemon/" + pokemon;
 		
 		/*Making call to PokeAPI*/
 		String resultJSON = client.get().uri(uri).retrieve().bodyToMono(String.class).block();
@@ -38,25 +40,6 @@ public class PokemonService implements PokemonInterface {
 		
 		/*Returning result*/
 		return result;
-	}
-
-	@Override
-	public String getPokemonSQL(int pokeId) {
-		Pokemon result = getPokemon(Integer.toString(pokeId));
-		String sql = "INSERT INTO pokemon VALUES(";
-		sql += Integer.toString(result.getId()) + ", ";
-		sql += result.getName() + ", ";
-		sql += result.getImageUrl() + ");";
-		return sql;
-	}
-
-	@Override
-	public String getAllPokemonSQL() {
-		String script = "";
-		for (int i = 1; i <= 1154; i++) {
-			script += getPokemonSQL(i) + "\n";
-		}
-		return script;
 	}
 	
 	@Override

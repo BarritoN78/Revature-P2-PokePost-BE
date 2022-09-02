@@ -23,10 +23,4 @@ public class PokemonController {
 		Pokemon result = pokeServ.getPokemon(pokeId);
 		return ResponseEntity.ok(result);
 	}
-	
-	@GetMapping("/sql")
-	public ResponseEntity<String> getPokemonSQL(){
-		String sql = pokeServ.getAllPokemonSQL();
-		return ResponseEntity.ok(sql);
-	}
 }

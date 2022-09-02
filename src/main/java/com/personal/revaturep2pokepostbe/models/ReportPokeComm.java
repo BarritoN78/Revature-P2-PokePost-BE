@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.personal.revaturep2pokepostbe.models.dtos.PokeCommIDDTO;
 import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
@@ -21,9 +21,9 @@ public class ReportPokeComm {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToMany
+	@ManyToOne
 	private PokeCommIDDTO commentID;
-	@ManyToMany(targetEntity = User.class)
+	@ManyToOne
 	private UserIDDTO userID;
 	private String reason;
 }

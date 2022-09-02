@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.personal.revaturep2pokepostbe.models.dtos.ArtCommIDDTO;
 import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
@@ -21,8 +21,8 @@ public class RateFanart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToMany
+	@ManyToOne
 	private ArtCommIDDTO artID;
-	@ManyToMany
+	@ManyToOne
 	private UserIDDTO userID;
 }

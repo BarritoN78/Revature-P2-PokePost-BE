@@ -6,11 +6,11 @@ spring:
       url: jdbc:h2:mem:memdb
       username: sa
       password: password
-   jpa:
+   jpa:   
+      defer-datasource-initialization: true
       hibernate:
-         ddl-auto: create-drop
+         ddl-auto: create
          database-platform: org.hibernate.dialect.H2Dialect
-         defer-datasource-initialization: true
          open-in-view: true
          properties:
             hibernate.format_sql: true
