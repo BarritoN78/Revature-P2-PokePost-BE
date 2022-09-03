@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.EmailAlreadyExistsException;
+import com.personal.revaturep2pokepostbe.exceptions.UsernameAlreadyExistsException;
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
 import com.personal.revaturep2pokepostbe.services.UserService;
@@ -23,7 +25,7 @@ public class UserController {
 	}	
 	
 	@PostMapping
-	public ResponseEntity<UserDTO> registerUser(@RequestBody User newUser){
+	public ResponseEntity<UserDTO> registerUser(@RequestBody User newUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException{
 		User result = userServ.registerUser(newUser);
 		UserDTO returnDTO = new UserDTO(result);
 		return ResponseEntity.ok(returnDTO);
@@ -36,14 +38,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/update/details")
-	public ResponseEntity<UserDTO> updateUserDetails(@RequestBody UserDTO updatedUser){
+	public ResponseEntity<UserDTO> updateUserDetails(@RequestBody UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException{
 		User result = userServ.updateUserDetails(updatedUser);
 		UserDTO returnDTO = new UserDTO(result);
 		return ResponseEntity.ok(returnDTO);
 	}
 	
 	@PostMapping("update/password")
-	public ResponseEntity<UserDTO> updateUserPassword(@RequestBody User updatedUser){
+	public ResponseEntity<UserDTO> updateUserPassword(@RequestBody User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException{
 		User result = userServ.updateUserPassword(updatedUser);
 		UserDTO returnDTO = new UserDTO(result);
 		return ResponseEntity.ok(returnDTO);

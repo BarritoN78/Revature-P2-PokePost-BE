@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.personal.revaturep2pokepostbe.exceptions.PokemonNotFoundException;
 import com.personal.revaturep2pokepostbe.models.Ability;
 import com.personal.revaturep2pokepostbe.models.Move;
 import com.personal.revaturep2pokepostbe.models.Pokemon;
@@ -19,8 +20,9 @@ public interface PokemonInterface {
 	 * Retrieves a pokemon's statistics from PokeAPI given the pokemon's id or name
 	 * @param pokemon
 	 * @return
+	 * @throws PokemonNotFoundException 
 	 */
-	public Pokemon getPokemon(String pokemon);
+	public Pokemon getPokemon(String pokemon) throws PokemonNotFoundException;
 	
 	/**
 	 * Converts the JSON string provided by the PokeAPI into a Pokemon object

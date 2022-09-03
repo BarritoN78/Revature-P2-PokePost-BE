@@ -1,3 +1,4 @@
+-- <<< Pokemon Data >>> --
 INSERT INTO pokemon VALUES(1, 'bulbasaur', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png');
 INSERT INTO pokemon VALUES(2, 'ivysaur', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png');
 INSERT INTO pokemon VALUES(3, 'venusaur', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png');
@@ -903,3 +904,30 @@ INSERT INTO pokemon VALUES(902, 'basculegion-male', 'null');
 INSERT INTO pokemon VALUES(903, 'sneasler', 'null');
 INSERT INTO pokemon VALUES(904, 'overqwil', 'null');
 INSERT INTO pokemon VALUES(905, 'enamorus-incarnate', 'null');
+
+-- <<< User Data >>> --
+INSERT INTO users VALUES(default, 'barry912@revature.net', 'BarritoN78', 'password', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/363.png', 'Barry', 'Norton', 'admin');
+INSERT INTO users VALUES(default, 'testuser1@revature.net', 'TestUser1', 'password', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png', 'Test', 'User', 'user');
+
+-- <<< Fanart Data >>> --
+INSERT INTO fanart VALUES(default, 1, 'images/sad_pikachu.png', 'A Wild Pikachu', 'pikachu, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/topFanTile.jpg', 'Imma Firin ma Lazar', 'tyranitar, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/spheal.png', 'Spheal With It!', 'spheal, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/bad_spheal.jpg', 'Bad Spheal', 'spheal, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/blastoise.jpg', 'Battle Ready Blastoise', 'blastoise, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/bulbasaur.jpg', 'Bulbasaur in Their Element', 'bulbasaur, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/charmander.png', 'Charizard Would Be Proud', 'charmander, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/eevie.jpg', 'The Eevilution', 'eevie, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/mew.jpg', 'Mew Too Cute', 'mew, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/mewtwo.jpg', 'Mewtwo Plus Ultra', 'mewtwo, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/pikachu_knight.png', 'To Battle Pikachu!', 'pikachu, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/pikachuEevie.jpg', 'An Intense Battle', 'pikachu, eevie, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/snorlax.png', 'A Lazy Day', 'snorlax, BarritoN78', 0, 0, default);
+INSERT INTO fanart VALUES(default, 1, 'images/fanart/squirtle.jpg', 'Squirtle', 'squirtle, BarritoN78', 0, 0, default);
+
+-- <<< ArtComment Data >> --
+
+insert into artcomment values (default, 1, 1, 'Y he so sad', 0, 0, default);
+insert into artcomment values (default, 1, 1, 'who hurt you pikachu', 0, 0, default);
+insert into artcomment values (default, 2, 1, 'Shoop de Whoop!', 0, 0, default);
+insert into artcomment values (default, 2, 1, 'One powerful boi', 0, 0, default);

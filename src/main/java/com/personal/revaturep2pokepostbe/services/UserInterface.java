@@ -1,5 +1,7 @@
 package com.personal.revaturep2pokepostbe.services;
 
+import com.personal.revaturep2pokepostbe.exceptions.EmailAlreadyExistsException;
+import com.personal.revaturep2pokepostbe.exceptions.UsernameAlreadyExistsException;
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
 
@@ -29,21 +31,21 @@ public interface UserInterface {
 	 * @param newUser
 	 * @return
 	 */
-	public User registerUser(User newUser);
+	public User registerUser(User newUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 	
 	/**
 	 * Updates an existing user's details
 	 * @param updatedUser
 	 * @return
 	 */
-	public User updateUserDetails(UserDTO updatedUser);
+	public User updateUserDetails(UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 	
 	/**
 	 * Updates an existing user's password
 	 * @param updatedUser
 	 * @return
 	 */
-	public User updateUserPassword(User updatedUser);
+	public User updateUserPassword(User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 	
 	/**
 	 * Deletes a user with the given ID
@@ -51,4 +53,20 @@ public interface UserInterface {
 	 * @return
 	 */
 	public boolean deleteUser(int userID);
+	
+	/**
+	 * Searches database for a record with a given user's email.
+	 * If a record exists, compares the id of the given user to that of the record.
+	 * @param email
+	 * @return
+	 */
+	public boolean doesEmailExist(User user) throws EmailAlreadyExistsException;
+	
+	/**
+	 * Searches database for a record with a given user's username.
+	 * If a record exists, compares the id of the given user to that of the record.
+	 * @param email
+	 * @return
+	 */
+	public boolean doesUsernameExist(User user) throws UsernameAlreadyExistsException;
 }
