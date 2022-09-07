@@ -1,6 +1,8 @@
 package com.personal.revaturep2pokepostbe.services;
 
+import com.personal.revaturep2pokepostbe.exceptions.AuthenticationFailedException;
 import com.personal.revaturep2pokepostbe.exceptions.EmailAlreadyExistsException;
+import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.UsernameAlreadyExistsException;
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
@@ -16,20 +18,24 @@ public interface UserInterface {
 	 * @param email
 	 * @param password
 	 * @return
+	 * @throws AuthenticationFailedException 
 	 */
-	public User getUserByCredentials(String email, String password);
+	public User getUserByCredentials(String email, String password) throws AuthenticationFailedException;
 	
 	/**
 	 * Retrieves a user with the given ID
 	 * @param userID
 	 * @return
+	 * @throws RecordNotFoundException 
 	 */
-	public User getUser(int userID);
+	public User getUser(int userID) throws RecordNotFoundException;
 	
 	/**
 	 * Registers a new user
 	 * @param newUser
 	 * @return
+	 * @throws UsernameAlreadyExistsException
+	 * @throws EmailAlreadyExistsException
 	 */
 	public User registerUser(User newUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 	
@@ -37,6 +43,8 @@ public interface UserInterface {
 	 * Updates an existing user's details
 	 * @param updatedUser
 	 * @return
+	 * @throws UsernameAlreadyExistsException
+	 * @throws EmailAlreadyExistsException
 	 */
 	public User updateUserDetails(UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 	
@@ -44,6 +52,8 @@ public interface UserInterface {
 	 * Updates an existing user's password
 	 * @param updatedUser
 	 * @return
+	 * @throws UsernameAlreadyExistsException
+	 * @throws EmailAlreadyExistsException
 	 */
 	public User updateUserPassword(User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 	
@@ -51,14 +61,16 @@ public interface UserInterface {
 	 * Deletes a user with the given ID
 	 * @param userID
 	 * @return
+	 * @throws RecordNotFoundException 
 	 */
-	public boolean deleteUser(int userID);
+	public boolean deleteUser(int userID) throws RecordNotFoundException;
 	
 	/**
 	 * Searches database for a record with a given user's email.
 	 * If a record exists, compares the id of the given user to that of the record.
 	 * @param email
 	 * @return
+	 * @throws EmailAlreadyExistsException
 	 */
 	public boolean doesEmailExist(User user) throws EmailAlreadyExistsException;
 	
@@ -67,6 +79,7 @@ public interface UserInterface {
 	 * If a record exists, compares the id of the given user to that of the record.
 	 * @param email
 	 * @return
+	 * @throws UsernameAlreadyExistsException
 	 */
 	public boolean doesUsernameExist(User user) throws UsernameAlreadyExistsException;
 }

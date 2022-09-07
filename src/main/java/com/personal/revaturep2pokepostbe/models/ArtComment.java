@@ -2,6 +2,7 @@ package com.personal.revaturep2pokepostbe.models;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class ArtComment {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	@ManyToOne
 	private ArtIDDTO artId;

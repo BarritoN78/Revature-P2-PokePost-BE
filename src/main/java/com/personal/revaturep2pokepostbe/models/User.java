@@ -1,5 +1,6 @@
 package com.personal.revaturep2pokepostbe.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,15 +20,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	private String email;
 	private String username;
 	private String password;
-	private String profileImage;
+	private String profileImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/363.png";
 	private String firstName;
 	private String lastName;
-	private String role;
+	private String role = "user";
 	
 	/*Custom Constructor*/
 	

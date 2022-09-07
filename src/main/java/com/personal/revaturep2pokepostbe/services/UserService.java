@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.personal.revaturep2pokepostbe.exceptions.AuthenticationFailedException;
 import com.personal.revaturep2pokepostbe.exceptions.EmailAlreadyExistsException;
+import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.UsernameAlreadyExistsException;
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
@@ -25,22 +27,21 @@ public class UserService implements UserInterface {
 	}
 
 	@Override
-	public User getUserByCredentials(String email, String password) {
+	public User getUserByCredentials(String email, String password) throws AuthenticationFailedException {
 		Optional<User> result = userRepo.findByEmailAndPassword(email, password);
 		if (result.isPresent()) {
 			return result.get();
 		} else {
-			return null;
+			throw new AuthenticationFailedException(email);
 		}
 	}
 
 	@Override
-	public User getUser(int userID) {
+	public User getUser(int userID) throws RecordNotFoundException {
 		try {
 			return userRepo.findById(userID).get();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new RecordNotFoundException("User", userID);
 		}
 	}
 
@@ -81,13 +82,12 @@ public class UserService implements UserInterface {
 	}
 
 	@Override
-	public boolean deleteUser(int userID) {
+	public boolean deleteUser(int userID) throws RecordNotFoundException {
 		try {
 			userRepo.deleteById(userID);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			throw new RecordNotFoundException("User", userID);
 		}
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personal.revaturep2pokepostbe.exceptions.EmailAlreadyExistsException;
+import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.UsernameAlreadyExistsException;
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
@@ -24,7 +25,7 @@ public class UserController {
 		this.userServ = userServ;
 	}	
 	
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<UserDTO> registerUser(@RequestBody User newUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException{
 		User result = userServ.registerUser(newUser);
 		UserDTO returnDTO = new UserDTO(result);
@@ -32,7 +33,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{userID}")
-	public ResponseEntity<Boolean> deleteUser(@PathVariable int userID){
+	public ResponseEntity<Boolean> deleteUser(@PathVariable int userID) throws RecordNotFoundException{
 		boolean result = userServ.deleteUser(userID);
 		return ResponseEntity.ok(result);
 	}
@@ -52,7 +53,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userID}")
-	public ResponseEntity<UserDTO> getUser(@PathVariable int userID){
+	public ResponseEntity<UserDTO> getUser(@PathVariable int userID) throws RecordNotFoundException{
 		User result = userServ.getUser(userID);
 		UserDTO returnDTO = new UserDTO(result);
 		return ResponseEntity.ok(returnDTO);

@@ -1,7 +1,9 @@
 package com.personal.revaturep2pokepostbe.models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +22,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Fanart {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "serial")
 	private int id;
 	@ManyToOne(targetEntity = User.class)
 	private UserIDDTO author;
@@ -29,5 +32,5 @@ public class Fanart {
 	private String tags;
 	private int likes;
 	private int reports;
-	private Date postDate;
+	private Date postDate = Date.valueOf(LocalDate.now());
 }
