@@ -26,7 +26,7 @@ public class Fanart {
 	@Column(columnDefinition = "serial")
 	private int id;
 	@ManyToOne(targetEntity = User.class)
-	private UserIDDTO author;
+	private User author;
 	private String imageURL;
 	private String title;
 	private String tags;

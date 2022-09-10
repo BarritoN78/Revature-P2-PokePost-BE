@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.personal.revaturep2pokepostbe.models.Fanart;
+
 import lombok.Data;
 
 @Data
@@ -12,4 +14,10 @@ import lombok.Data;
 public class ArtIDDTO {
 	@Id
 	private int id;
+
+	/*Custom Constructors*/
+	
+	public ArtIDDTO(Fanart convertArt) {
+		this.id = convertArt.getId();
+	}
 }

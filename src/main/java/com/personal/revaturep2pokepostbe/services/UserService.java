@@ -1,5 +1,6 @@
 package com.personal.revaturep2pokepostbe.services;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -57,26 +58,34 @@ public class UserService implements UserInterface {
 
 	@Override
 	public User updateUserDetails(UserDTO updatedUser)
-			throws UsernameAlreadyExistsException, EmailAlreadyExistsException {
-		User originalUser = userRepo.findById(updatedUser.getId()).get();
-		User newUser = new User(updatedUser);
-		newUser.setPassword(originalUser.getPassword());
-		newUser.setRole(originalUser.getRole());
-		if (!doesEmailExist(newUser)) {
-			if (!doesUsernameExist(newUser)) {
-				return userRepo.save(newUser);
+			throws UsernameAlreadyExistsException, EmailAlreadyExistsException, RecordNotFoundException {
+		try {
+			User originalUser = userRepo.findById(updatedUser.getId()).get();
+			User newUser = new User(updatedUser);
+			newUser.setPassword(originalUser.getPassword());
+			newUser.setRole(originalUser.getRole());
+			if (!doesEmailExist(newUser)) {
+				if (!doesUsernameExist(newUser)) {
+					return userRepo.save(newUser);
+				}
 			}
+		} catch (NoSuchElementException e) {
+			throw new RecordNotFoundException("User", updatedUser.getId());
 		}
 		return null;
 	}
 
 	@Override
 	public User updateUserPassword(User updatedUser)
-			throws UsernameAlreadyExistsException, EmailAlreadyExistsException {
-		if (!doesEmailExist(updatedUser)) {
-			if (!doesUsernameExist(updatedUser)) {
-				return userRepo.save(updatedUser);
+			throws UsernameAlreadyExistsException, EmailAlreadyExistsException, RecordNotFoundException {
+		try {
+			if (!doesEmailExist(updatedUser)) {
+				if (!doesUsernameExist(updatedUser)) {
+					return userRepo.save(updatedUser);
+				}
 			}
+		} catch (NoSuchElementException e) {
+			throw new RecordNotFoundException("User", updatedUser.getId());
 		}
 		return null;
 	}

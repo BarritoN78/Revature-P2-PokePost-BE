@@ -39,14 +39,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/update/details")
-	public ResponseEntity<UserDTO> updateUserDetails(@RequestBody UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException{
+	public ResponseEntity<UserDTO> updateUserDetails(@RequestBody UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException, RecordNotFoundException{
 		User result = userServ.updateUserDetails(updatedUser);
 		UserDTO returnDTO = new UserDTO(result);
 		return ResponseEntity.ok(returnDTO);
 	}
 	
-	@PostMapping("update/password")
-	public ResponseEntity<UserDTO> updateUserPassword(@RequestBody User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException{
+	@PostMapping("/update/password")
+	public ResponseEntity<UserDTO> updateUserPassword(@RequestBody User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException, RecordNotFoundException{
 		User result = userServ.updateUserPassword(updatedUser);
 		UserDTO returnDTO = new UserDTO(result);
 		return ResponseEntity.ok(returnDTO);

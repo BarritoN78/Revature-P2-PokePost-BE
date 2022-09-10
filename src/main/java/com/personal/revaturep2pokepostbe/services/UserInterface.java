@@ -45,8 +45,9 @@ public interface UserInterface {
 	 * @return
 	 * @throws UsernameAlreadyExistsException
 	 * @throws EmailAlreadyExistsException
+	 * @throws RecordNotFoundException 
 	 */
-	public User updateUserDetails(UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
+	public User updateUserDetails(UserDTO updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException, RecordNotFoundException;
 	
 	/**
 	 * Updates an existing user's password
@@ -54,8 +55,9 @@ public interface UserInterface {
 	 * @return
 	 * @throws UsernameAlreadyExistsException
 	 * @throws EmailAlreadyExistsException
+	 * @throws RecordNotFoundException 
 	 */
-	public User updateUserPassword(User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
+	public User updateUserPassword(User updatedUser) throws UsernameAlreadyExistsException, EmailAlreadyExistsException, RecordNotFoundException;
 	
 	/**
 	 * Deletes a user with the given ID

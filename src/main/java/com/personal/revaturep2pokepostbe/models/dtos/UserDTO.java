@@ -13,7 +13,7 @@ public class UserDTO {
 	private int id;
 	private String email;
 	private String username;
-	private String profileImage;
+	private String profileImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/363.png";;
 	private String firstName;
 	private String lastName;
 	

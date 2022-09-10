@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.AuthenticationFailedException;
 import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
 import com.personal.revaturep2pokepostbe.services.UserService;
@@ -22,7 +23,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<UserDTO> login(@RequestBody Map<String, String> credentials){
+	public ResponseEntity<UserDTO> login(@RequestBody Map<String, String> credentials) throws AuthenticationFailedException{
 		String email = credentials.get("email");
 		String password = credentials.get("password");
 		User result = userServ.getUserByCredentials(email, password);
