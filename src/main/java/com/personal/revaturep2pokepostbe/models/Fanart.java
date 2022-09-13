@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.personal.revaturep2pokepostbe.models.dtos.ArtDTO;
 import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +31,20 @@ public class Fanart {
 	private String imageURL;
 	private String title;
 	private String tags;
-	private int likes;
-	private int reports;
+	private int likes = 0;
+	private int reports = 0;
 	private Date postDate = Date.valueOf(LocalDate.now());
+	
+    /*Custom Constructors*/
+	
+	public Fanart(ArtDTO convertArt) {
+		this.id = convertArt.getId();
+		this.author = new User(convertArt.getAuthor());
+		this.imageURL = convertArt.getImageURL();
+		this.title = convertArt.getTitle();
+		this.tags = convertArt.getTags();
+		this.likes = convertArt.getLikes();
+		this.reports = convertArt.getReports();
+		this.postDate = convertArt.getPostDate();		
+	}
 }

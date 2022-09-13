@@ -9,7 +9,15 @@ import com.personal.revaturep2pokepostbe.models.RateArtComm;
 public interface RateArtCommRepository extends JpaRepository<RateArtComm, Integer>{
 
 	/**
-	 * Deletes a rating on a given comment made by a given user
+	 * Returns a boolean based on if a rating on a given fanart comment made by a given user exists
+	 * @param commentID
+	 * @param userID
+	 * @return
+	 */
+	boolean existsByCommentIDAndUserID(int commentID, int userID);
+	
+	/**
+	 * Deletes a rating on a given fanart comment made by a given user
 	 * @param commentID
 	 * @param userID
 	 * @return

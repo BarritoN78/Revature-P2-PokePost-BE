@@ -913,17 +913,17 @@ INSERT INTO users(id, email, username, password, profile_image, first_name, last
 INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/sad_pikachu.png', 'A Wild Pikachu', 'pikachu, BarritoN78', 0, 0, '2000-01-01');
 INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/topFanTile.jpg', 'Imma Firin ma Lazar', 'tyranitar, BarritoN78', 0, 0, '2000-01-01');
 INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/spheal.png', 'Spheal With It!', 'spheal, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/bad_spheal.jpg', 'Bad Spheal', 'spheal, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/blastoise.jpg', 'Battle Ready Blastoise', 'blastoise, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/bulbasaur.jpg', 'Bulbasaur in Their Element', 'bulbasaur, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/charmander.png', 'Charizard Would Be Proud', 'charmander, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/eevie.jpg', 'The Eevilution', 'eevie, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/mew.jpg', 'Mew Too Cute', 'mew, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/mewtwo.jpg', 'Mewtwo Plus Ultra', 'mewtwo, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/pikachu_knight.png', 'To Battle Pikachu!', 'pikachu, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/pikachuEevie.jpg', 'An Intense Battle', 'pikachu, eevie, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/snorlax.png', 'A Lazy Day', 'snorlax, BarritoN78', 0, 0, '2000-01-01');
-INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/squirtle.jpg', 'Squirtle', 'squirtle, BarritoN78', 0, 0, '2000-01-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/bad_spheal.jpg', 'Bad Spheal', 'spheal, BarritoN78', 0, 0, '2000-02-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/blastoise.jpg', 'Battle Ready Blastoise', 'blastoise, BarritoN78', 0, 0, '2000-02-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/bulbasaur.jpg', 'Bulbasaur in Their Element', 'bulbasaur, BarritoN78', 0, 0, '2000-02-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/charmander.png', 'Charizard Would Be Proud', 'charmander, BarritoN78', 0, 0, '2000-03-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/eevie.jpg', 'The Eevilution', 'eevie, BarritoN78', 0, 0, '2000-03-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/mew.jpg', 'Mew Too Cute', 'mew, BarritoN78', 0, 0, '2000-03-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/mewtwo.jpg', 'Mewtwo Plus Ultra', 'mewtwo, BarritoN78', 0, 0, '2000-04-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/pikachu_knight.png', 'To Battle Pikachu!', 'pikachu, BarritoN78', 0, 0, '2000-04-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/pikachuEevie.jpg', 'An Intense Battle', 'pikachu, eevie, BarritoN78', 0, 0, '2000-04-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/snorlax.png', 'A Lazy Day', 'snorlax, BarritoN78', 0, 0, '2000-05-01');
+INSERT INTO fanart(id, author_id, imageURL, title, tags, likes, reports, post_Date) VALUES(default, 1, 'images/fanart/squirtle.jpg', 'Squirtle', 'squirtle, BarritoN78', 0, 0, '2000-05-01');
 
 -- <<< ArtComment Data >> --
 insert into art_comment(id, art_id_id, author_id, content, likes, reports, post_Date) values (default, 1, 1, 'Y he so sad', 0, 0, '2000-01-01');

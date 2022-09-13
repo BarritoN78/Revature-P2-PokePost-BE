@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.PageNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
 import com.personal.revaturep2pokepostbe.models.dtos.ArtDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.ArtIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 import com.personal.revaturep2pokepostbe.services.FanartService;
 
 @RestController
@@ -31,15 +35,16 @@ public class FanartController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Fanart> postFanart(@RequestBody Fanart newFanart) {
+	public ResponseEntity<Fanart> postFanart(@RequestBody ArtDTO newFanartDTO) {
+		Fanart newFanart = new Fanart(newFanartDTO);
 		Fanart result = artServ.postFanart(newFanart);
 		return ResponseEntity.ok(result);
 	}
 
 	@DeleteMapping("/{artID}")
-	public ResponseEntity<Boolean> deleteFanart(@PathVariable int artID) throws RecordNotFoundException {
-		boolean result = artServ.deleteFanart(artID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> deleteFanart(@PathVariable int artID) throws RecordNotFoundException {
+		artServ.deleteFanart(artID);
+		return ResponseEntity.ok("The record with the id of [" + artID + "] has been deleted successfully!");
 	}
 
 	@GetMapping("/{artID}")
@@ -64,25 +69,24 @@ public class FanartController {
 	}
 
 	@PostMapping(path = "/filter")
-	public ResponseEntity<Page<ArtDTO>> getFilteredFanart(@RequestBody String field, @RequestParam int page,
-			@RequestParam int size) throws PageNotFoundException {
+	public ResponseEntity<Page<ArtDTO>> getFilteredFanart(@RequestBody Map<String, String> filters,
+			@RequestParam int page, @RequestParam int size) throws PageNotFoundException {
 		try {
 			Page<ArtDTO> result;
+			String field = filters.get("field");
+			String value = filters.get("value");
 			switch (field) {
 			case "title":
-				result = artServ.getAllFanartByPage(page, size);
+				result = artServ.getFanartByTitle(value, page, size);
 				break;
 			case "tags":
-				result = artServ.getAllFanartByPage(page, size);
-				break;
-			case "author":
-				result = artServ.getAllFanartByPage(page, size);
+				result = artServ.getFanartByTags(value, page, size);
 				break;
 			case "dateAfter":
-				result = artServ.getAllFanartByPage(page, size);
+				result = artServ.getFanartByPostDate(value, true, page, size);
 				break;
 			case "dateBefore":
-				result = artServ.getAllFanartByPage(page, size);
+				result = artServ.getFanartByPostDate(value, false, page, size);
 				break;
 			default:
 				result = artServ.getAllFanartByPage(page, size);
@@ -99,30 +103,38 @@ public class FanartController {
 	}
 
 	@PostMapping(path = "/rate")
-	public ResponseEntity<RateFanart> rate(@RequestBody RateFanart newRateArtComm) {
-		RateFanart result = artServ.rateFanart(newRateArtComm);
+	public ResponseEntity<RateFanart> rate(@RequestBody RateFanart newRateArt) throws AlreadyRatedException {
+		RateFanart result = artServ.rateFanart(newRateArt);
 		return ResponseEntity.ok(result);
 	}
 
 	@DeleteMapping(path = "/unrate")
-	public ResponseEntity<Boolean> unrateFanart(@RequestBody Map<String, String> body) {
-		int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
-		int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
-		Boolean result = artServ.unrateFanart(commentID, userID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> unrateFanart(@RequestBody Map<String, String> body) throws RecordNotFoundException {
+		try {
+			int artID = Integer.parseInt(body.getOrDefault("artID", "-1"));
+			int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
+			artServ.unrateFanart(new ArtIDDTO(artID), new UserIDDTO(userID));
+			return ResponseEntity.ok("User[" + userID + "] has unrated Art[" + artID + "] successfully!");
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().body("The values of the given IDs must be valid integers");
+		}
 	}
 
 	@PostMapping(path = "/report")
-	public ResponseEntity<ReportFanart> reportFanart(ReportFanart newReportArtComm) {
-		ReportFanart result = artServ.reportFanart(newReportArtComm);
+	public ResponseEntity<ReportFanart> reportFanart(ReportFanart newReportArt) throws AlreadyReportedException {
+		ReportFanart result = artServ.reportFanart(newReportArt);
 		return ResponseEntity.ok(result);
 	}
 
 	@DeleteMapping(path = "/unreport")
-	public ResponseEntity<Boolean> unreportFanart(@RequestBody Map<String, String> body) {
-		int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
-		int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
-		Boolean result = artServ.unreportFanart(commentID, userID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> unreportFanart(@RequestBody Map<String, String> body) throws RecordNotFoundException {
+		try {
+			int artID = Integer.parseInt(body.getOrDefault("artID", "-1"));
+			int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
+			artServ.unreportFanart(new ArtIDDTO(artID), new UserIDDTO(userID));
+			return ResponseEntity.ok("User[" + userID + "] has unreported Art[" + artID + "] successfully!");
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().body("The values of the given IDs must be valid integers");
+		}
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.models.PokeComment;
 import com.personal.revaturep2pokepostbe.models.RatePokeComm;
 import com.personal.revaturep2pokepostbe.models.ReportPokeComm;
@@ -31,9 +32,9 @@ public class PokeCommController {
 	}
 
 	@DeleteMapping(path = "/{commentID}")
-	public ResponseEntity<Boolean> deletePokeComment(@PathVariable int commentID) {
-		boolean result = pokeCommServ.deletePokeComment(commentID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> deletePokeComment(@PathVariable int commentID) throws RecordNotFoundException {
+		pokeCommServ.deletePokeComment(commentID);
+		return ResponseEntity.ok("The record with the id of [" + commentID + "] has been deleted successfully!");
 	}
 
 	@PostMapping(path = "/rate")

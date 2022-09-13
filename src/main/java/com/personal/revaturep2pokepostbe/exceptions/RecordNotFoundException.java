@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * An exception to be thrown when PokeAPI returns a 404
+ * An exception to be thrown when a record cannot be found
  * @author Barry Norton
  *
  */

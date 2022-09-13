@@ -6,10 +6,14 @@ import javax.persistence.Table;
 
 import com.personal.revaturep2pokepostbe.models.User;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class UserIDDTO {
 	@Id

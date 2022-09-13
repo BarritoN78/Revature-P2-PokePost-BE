@@ -9,6 +9,14 @@ import com.personal.revaturep2pokepostbe.models.ReportArtComm;
 public interface ReportArtCommRepository extends JpaRepository<ReportArtComm, Integer>{
 
 	/**
+	 * Returns a boolean based on if a report on a given fanart made by a given user exists
+	 * @param commentID
+	 * @param userID
+	 * @return
+	 */
+	boolean existsByCommentIDAndUserID(int commentID, int userID);
+	
+	/**
 	 * Deletes a report on a given comment made by a given user
 	 * @param commentID
 	 * @param userID

@@ -33,9 +33,9 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{userID}")
-	public ResponseEntity<Boolean> deleteUser(@PathVariable int userID) throws RecordNotFoundException{
-		boolean result = userServ.deleteUser(userID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> deleteUser(@PathVariable int userID) throws RecordNotFoundException {
+		userServ.deleteUser(userID);
+		return ResponseEntity.ok("The record with the id of [" + userID + "] has been deleted successfully!");
 	}
 	
 	@PostMapping("/update/details")

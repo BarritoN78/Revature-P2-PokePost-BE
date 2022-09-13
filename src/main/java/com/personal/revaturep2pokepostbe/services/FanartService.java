@@ -11,31 +11,37 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
 import com.personal.revaturep2pokepostbe.models.dtos.ArtDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.ArtIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 import com.personal.revaturep2pokepostbe.repositories.FanartRepository;
 import com.personal.revaturep2pokepostbe.repositories.RateFanartRepository;
 import com.personal.revaturep2pokepostbe.repositories.ReportFanartRepository;
 
 /**
  * A service class for the manipulation of fanart
+ * 
  * @author Barry Norton
  *
  */
 @Service
-public class FanartService implements FanartInterface{
+public class FanartService implements FanartInterface {
 	private final FanartRepository artRepo;
 	private final RateFanartRepository rateArtRepo;
 	private final ReportFanartRepository reportArtRepo;
-	
-	public FanartService(FanartRepository artRepo, RateFanartRepository rateArtRepo, ReportFanartRepository reportArtRepo) {
+
+	public FanartService(FanartRepository artRepo, RateFanartRepository rateArtRepo,
+			ReportFanartRepository reportArtRepo) {
 		this.artRepo = artRepo;
 		this.rateArtRepo = rateArtRepo;
 		this.reportArtRepo = reportArtRepo;
-		
+
 	}
 
 	@Override
@@ -67,7 +73,7 @@ public class FanartService implements FanartInterface{
 		Pageable pageParams = PageRequest.of(page, size, Sort.by(Sort.Order.asc("id")));
 		Page<Fanart> result = artRepo.findAll(pageParams);
 		List<ArtDTO> resultDTO = new ArrayList<ArtDTO>();
-		
+
 		for (Fanart art : result) {
 			resultDTO.add(new ArtDTO(art));
 		}
@@ -79,9 +85,9 @@ public class FanartService implements FanartInterface{
 	@Override
 	public Page<ArtDTO> getFanartByTitle(String title, int page, int size) {
 		Pageable pageParams = PageRequest.of(page, size, Sort.by(Sort.Order.asc("id")));
-		Page<Fanart> result = artRepo.findByTitleContains(title, pageParams);
+		Page<Fanart> result = artRepo.findByTitleContainsIgnoreCase(title, pageParams);
 		List<ArtDTO> resultDTO = new ArrayList<ArtDTO>();
-		
+
 		for (Fanart art : result) {
 			resultDTO.add(new ArtDTO(art));
 		}
@@ -91,11 +97,11 @@ public class FanartService implements FanartInterface{
 	}
 
 	@Override
-	public Page<ArtDTO> gerFanartByTags(String tags, int page, int size) {
+	public Page<ArtDTO> getFanartByTags(String tags, int page, int size) {
 		Pageable pageParams = PageRequest.of(page, size, Sort.by(Sort.Order.asc("id")));
-		Page<Fanart> result = artRepo.findByTagsContains(tags, pageParams);
+		Page<Fanart> result = artRepo.findByTagsContainsIgnoreCase(tags, pageParams);
 		List<ArtDTO> resultDTO = new ArrayList<ArtDTO>();
-		
+
 		for (Fanart art : result) {
 			resultDTO.add(new ArtDTO(art));
 		}
@@ -110,11 +116,11 @@ public class FanartService implements FanartInterface{
 		Page<Fanart> result;
 		List<ArtDTO> resultDTO = new ArrayList<ArtDTO>();
 		if (greaterThan) {
-			result = artRepo.findByPostDateGreaterThanEqualTo(Date.valueOf(postDate), pageParams);
+			result = artRepo.findByPostDateGreaterThanEqual(Date.valueOf(postDate), pageParams);
 		} else {
-			result = artRepo.findByPostDateLessThanEqualTo(Date.valueOf(postDate), pageParams);
+			result = artRepo.findByPostDateLessThanEqual(Date.valueOf(postDate), pageParams);
 		}
-		
+
 		for (Fanart art : result) {
 			resultDTO.add(new ArtDTO(art));
 		}
@@ -124,23 +130,43 @@ public class FanartService implements FanartInterface{
 	}
 
 	@Override
-	public RateFanart rateFanart(RateFanart newRateArtComm) {
-		return rateArtRepo.save(newRateArtComm);
+	public RateFanart rateFanart(RateFanart newRateArt) throws AlreadyRatedException {
+		ArtIDDTO artID = newRateArt.getArtID();
+		UserIDDTO userID = newRateArt.getUserID();
+		if (!rateArtRepo.existsByArtIDAndUserID(artID, userID)) {
+			return rateArtRepo.save(newRateArt);
+		} else {
+			throw new AlreadyRatedException("Fanart", artID.getId(), userID.getId());
+		}
 	}
 
 	@Override
-	public boolean unrateFanart(int artID, int userID) {
-		return rateArtRepo.deleteByArtIDAndUserID(artID, userID);
+	public boolean unrateFanart(ArtIDDTO artID, UserIDDTO userID) throws RecordNotFoundException {
+		try {
+			return rateArtRepo.deleteByArtIDAndUserID(artID, userID);
+		} catch (Exception e) {
+			throw new RecordNotFoundException();
+		}
 	}
 
 	@Override
-	public ReportFanart reportFanart(ReportFanart newReportArtComm) {
-		return reportArtRepo.save(newReportArtComm);
+	public ReportFanart reportFanart(ReportFanart newReportArt) throws AlreadyReportedException {
+		int artID = newReportArt.getArtID().getId();
+		int userID = newReportArt.getArtID().getId();
+		if (!reportArtRepo.existsByArtIDAndUserID(artID, userID)) {
+			return reportArtRepo.save(newReportArt);
+		} else {
+			throw new AlreadyReportedException("Fanart", artID, userID);
+		}
 	}
 
-	@Override 
-	public boolean unreportFanart(int artID, int userID) {
-		return reportArtRepo.deleteByArtIDAndUserID(artID, userID);
+	@Override
+	public boolean unreportFanart(ArtIDDTO artID, UserIDDTO userID) throws RecordNotFoundException {
+		try {
+			return reportArtRepo.deleteByArtIDAndUserID(artID, userID);
+		} catch (Exception e) {
+			throw new RecordNotFoundException();
+		}
 	}
 
 }

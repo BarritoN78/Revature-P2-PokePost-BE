@@ -2,11 +2,15 @@ package com.personal.revaturep2pokepostbe.services;
 
 import org.springframework.data.domain.Page;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
 import com.personal.revaturep2pokepostbe.models.dtos.ArtDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.ArtIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 /**
  * An interface to be followed by FanartService
@@ -59,7 +63,7 @@ public interface FanartInterface {
 	 * @param size
 	 * @return
 	 */
-	public Page<ArtDTO> gerFanartByTags(String tags, int page, int size);
+	public Page<ArtDTO> getFanartByTags(String tags, int page, int size);
 	
 	/**
 	 * Retrieves fanart posted before or after a given date and returns a page of the results
@@ -73,30 +77,34 @@ public interface FanartInterface {
 	 * Adds a user's rating of a fanart
 	 * @param rateFanart
 	 * @return
+	 * @throws AlreadyRatedException 
 	 */
-	public RateFanart rateFanart(RateFanart rateFanart);
+	public RateFanart rateFanart(RateFanart rateFanart) throws AlreadyRatedException;
 	
 	/**
 	 * Deletes the rating with a given comment ID and user ID
 	 * @param artID
 	 * @param userID
 	 * @return
+	 * @throws RecordNotFoundException 
 	 */
-	public boolean unrateFanart(int artID, int userID);
+	public boolean unrateFanart(ArtIDDTO artID, UserIDDTO userID) throws RecordNotFoundException;
 	
 	/**
 	 * Adds a user's report of a fanart
 	 * @param rateFanart
 	 * @return
+	 * @throws AlreadyReportedException 
 	 */
-	public ReportFanart reportFanart(ReportFanart reportFanart);
+	public ReportFanart reportFanart(ReportFanart reportFanart) throws AlreadyReportedException;
 	
 	/**
 	 * Deletes the report with a given fanart ID and user ID
 	 * @param arttID
 	 * @param userID
 	 * @return
+	 * @throws RecordNotFoundException 
 	 */
-	public boolean unreportFanart(int artID, int userID);
+	public boolean unreportFanart(ArtIDDTO artID, UserIDDTO userID) throws RecordNotFoundException;
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.models.Wishlist;
 import com.personal.revaturep2pokepostbe.services.WishlistService;
 
@@ -30,9 +31,9 @@ public class WishlistController {
 	}
 	
 	@DeleteMapping("/{wishID}")
-	public ResponseEntity<Boolean> deleteFromWishlist(@PathVariable int wishID){
-		boolean result = wishServ.deleteFromWishlist(wishID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> deleteFromWishlist(@PathVariable int wishID) throws RecordNotFoundException {
+		wishServ.deleteFromWishlist(wishID);
+		return ResponseEntity.ok("The record with the id of [" + wishID + "] has been deleted successfully!");
 	}
 	
 	@GetMapping("/{userID}")

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,6 +46,17 @@ public class User {
 		this.profileImage = userDTO.getProfileImage();
 		this.firstName = userDTO.getFirstName();
 		this.lastName = userDTO.getLastName();
+		this.role = "";
+	}
+
+	public User(UserIDDTO userIDDTO) {
+		this.id = userIDDTO.getId();
+		this.email = "";
+		this.username = "";
+		this.password = "";
+		this.profileImage = "";
+		this.firstName = "";
+		this.lastName = "";
 		this.role = "";
 	}
 }

@@ -11,10 +11,14 @@ import javax.persistence.Table;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.User;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "fanart")
 public class ArtDTO {
 	@Id
@@ -38,7 +42,6 @@ public class ArtDTO {
 		this.tags = convertArt.getTags();
 		this.likes = convertArt.getLikes();
 		this.reports = convertArt.getReports();
-		this.postDate = convertArt.getPostDate();
-		
+		this.postDate = convertArt.getPostDate();		
 	}
 }

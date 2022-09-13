@@ -6,10 +6,14 @@ import javax.persistence.Table;
 
 import com.personal.revaturep2pokepostbe.models.ArtComment;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "artcomment")
 public class ArtCommIDDTO {
 	@Id
