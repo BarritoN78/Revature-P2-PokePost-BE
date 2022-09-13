@@ -24,6 +24,6 @@ public interface RateFanartRepository extends JpaRepository<RateFanart, Integer>
 	 * @param userID
 	 * @return
 	 */
-	boolean deleteByArtIDAndUserID(ArtIDDTO artID, UserIDDTO userID);
+	int deleteByArtIDAndUserID(ArtIDDTO artID, UserIDDTO userID);
 
 }

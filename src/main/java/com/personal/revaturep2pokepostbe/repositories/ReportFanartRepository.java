@@ -16,7 +16,7 @@ public interface ReportFanartRepository extends JpaRepository<ReportFanart, Inte
 	 * @param userID
 	 * @return
 	 */
-	boolean existsByArtIDAndUserID(int artID, int userID);
+	boolean existsByArtIDAndUserID(ArtIDDTO artID, UserIDDTO userID);
 	
 	/**
 	 * Deletes a report on a given fanart made by a given user
@@ -24,5 +24,5 @@ public interface ReportFanartRepository extends JpaRepository<ReportFanart, Inte
 	 * @param userID
 	 * @return
 	 */
-	boolean deleteByArtIDAndUserID(ArtIDDTO artID, UserIDDTO userID);
+	int deleteByArtIDAndUserID(ArtIDDTO artID, UserIDDTO userID);
 }

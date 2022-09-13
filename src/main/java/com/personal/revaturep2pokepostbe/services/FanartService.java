@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
@@ -131,19 +132,46 @@ public class FanartService implements FanartInterface {
 
 	@Override
 	public RateFanart rateFanart(RateFanart newRateArt) throws AlreadyRatedException {
+		RateFanart result;
+		Fanart ratedArt;
 		ArtIDDTO artID = newRateArt.getArtID();
 		UserIDDTO userID = newRateArt.getUserID();
 		if (!rateArtRepo.existsByArtIDAndUserID(artID, userID)) {
-			return rateArtRepo.save(newRateArt);
+			// Save the new rating
+			try {
+				result = rateArtRepo.save(newRateArt);
+			} catch (Exception e) {
+				result = null;
+			}
+
+			// Add a like to the respective fanart if the rating saved
+			if (result != null) {
+				ratedArt = artRepo.findById(newRateArt.getArtID().getId()).get();
+				ratedArt.setLikes(ratedArt.getLikes() + 1);
+				artRepo.save(ratedArt);
+			}
+			return result;
 		} else {
 			throw new AlreadyRatedException("Fanart", artID.getId(), userID.getId());
 		}
 	}
 
 	@Override
+	@Transactional
 	public boolean unrateFanart(ArtIDDTO artID, UserIDDTO userID) throws RecordNotFoundException {
+		Fanart unratedArt;
 		try {
-			return rateArtRepo.deleteByArtIDAndUserID(artID, userID);
+			if (rateArtRepo.deleteByArtIDAndUserID(artID, userID) > 0) {
+				// Remove a like from the respective fanart if the amount of likes is above zero
+				unratedArt = artRepo.findById(artID.getId()).get();
+				if (unratedArt.getLikes() > 0) {
+					unratedArt.setLikes(unratedArt.getLikes() - 1);
+					artRepo.save(unratedArt);
+				}
+				return true;
+			} else {
+				throw new RecordNotFoundException();
+			}
 		} catch (Exception e) {
 			throw new RecordNotFoundException();
 		}
@@ -151,19 +179,45 @@ public class FanartService implements FanartInterface {
 
 	@Override
 	public ReportFanart reportFanart(ReportFanart newReportArt) throws AlreadyReportedException {
-		int artID = newReportArt.getArtID().getId();
-		int userID = newReportArt.getArtID().getId();
+		ReportFanart result;
+		Fanart reportedArt;
+		ArtIDDTO artID = newReportArt.getArtID();
+		UserIDDTO userID = newReportArt.getUserID();
 		if (!reportArtRepo.existsByArtIDAndUserID(artID, userID)) {
-			return reportArtRepo.save(newReportArt);
+			try {
+				result = reportArtRepo.save(newReportArt);
+			} catch (Exception e) {
+				result = null;
+			}
+
+			// Add a like to the respective fanart if the rating saved
+			if (result != null) {
+				reportedArt = artRepo.findById(newReportArt.getArtID().getId()).get();
+				reportedArt.setReports(reportedArt.getReports() + 1);
+				artRepo.save(reportedArt);
+			}
+			return result;
 		} else {
-			throw new AlreadyReportedException("Fanart", artID, userID);
+			throw new AlreadyReportedException("Fanart", artID.getId(), userID.getId());
 		}
 	}
 
 	@Override
+	@Transactional
 	public boolean unreportFanart(ArtIDDTO artID, UserIDDTO userID) throws RecordNotFoundException {
+		Fanart unreportedArt;
 		try {
-			return reportArtRepo.deleteByArtIDAndUserID(artID, userID);
+			if (reportArtRepo.deleteByArtIDAndUserID(artID, userID) > 0) {
+				// Remove a report from the respective fanart if the amount of Reports is above zero
+				unreportedArt = artRepo.findById(artID.getId()).get();
+				if (unreportedArt.getReports() > 0) {
+					unreportedArt.setReports(unreportedArt.getReports() - 1);
+					artRepo.save(unreportedArt);
+				}
+				return true;
+			} else {
+				throw new RecordNotFoundException();
+			}
 		} catch (Exception e) {
 			throw new RecordNotFoundException();
 		}

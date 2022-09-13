@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.personal.revaturep2pokepostbe.models.dtos.ArtDTO;
-import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

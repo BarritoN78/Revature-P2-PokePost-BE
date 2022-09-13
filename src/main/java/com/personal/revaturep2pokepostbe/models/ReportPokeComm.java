@@ -1,6 +1,5 @@
 package com.personal.revaturep2pokepostbe.models;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,5 +25,5 @@ public class ReportPokeComm {
 	private PokeCommIDDTO commentID;
 	@ManyToOne
 	private UserIDDTO userID;
-	private String reason;
+	private String reason = "Explicit Content";
 }

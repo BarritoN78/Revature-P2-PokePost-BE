@@ -25,5 +25,5 @@ public class ReportFanart {
 	private ArtIDDTO artID;
 	@ManyToOne
 	private UserIDDTO userID;
-	private String reason;
+	private String reason = "Explicit Content";
 }
