@@ -1,6 +1,7 @@
 package com.personal.revaturep2pokepostbe.models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +27,11 @@ public class PokeComment {
 	@Column(columnDefinition = "serial")
 	private int id;
 	@ManyToOne
-	private PokemonIDDTO pokeID;
+	private PokemonIDDTO pokeId;
 	@ManyToOne
 	private UserIDDTO author;
 	private String content;
-	private int likes;
-	private int reports;
-	private Date postDate;
+	private int likes = 0;
+	private int reports = 0;
+	private Date postDate = Date.valueOf(LocalDate.now());
 }

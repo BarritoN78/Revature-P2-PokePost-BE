@@ -10,58 +10,73 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
+import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.ArtComment;
 import com.personal.revaturep2pokepostbe.models.RateArtComm;
 import com.personal.revaturep2pokepostbe.models.ReportArtComm;
+import com.personal.revaturep2pokepostbe.models.dtos.ArtCommIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 import com.personal.revaturep2pokepostbe.services.ArtCommService;
 
 @RestController
 @RequestMapping("/fanart/comment")
 public class ArtCommController {
 	private final ArtCommService artCommServ;
-	
+
 	public ArtCommController(ArtCommService artCommServ) {
 		this.artCommServ = artCommServ;
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<ArtComment> postArtComment(@RequestBody ArtComment newArtComm){
+	public ResponseEntity<ArtComment> postArtComment(@RequestBody ArtComment newArtComm) throws SaveFailedException {
 		ArtComment result = artCommServ.postArtComment(newArtComm);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@DeleteMapping(path = "/{commentID}")
 	public ResponseEntity<String> deleteArtComment(@PathVariable int commentID) throws RecordNotFoundException {
 		artCommServ.deleteArtComment(commentID);
 		return ResponseEntity.ok("The record with the id of [" + commentID + "] has been deleted successfully!");
 	}
-	
+
 	@PostMapping(path = "/rate")
-	public ResponseEntity<RateArtComm> rateArtComment(@RequestBody RateArtComm newRateArtComm){
+	public ResponseEntity<RateArtComm> rateArtComment(@RequestBody RateArtComm newRateArtComm)
+			throws AlreadyRatedException, RecordNotFoundException, SaveFailedException {
 		RateArtComm result = artCommServ.rateArtComment(newRateArtComm);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@DeleteMapping(path = "/unrate")
-	public ResponseEntity<Boolean> unrateArtComment(@RequestBody Map<String, String> body){
-		int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
-		int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
-		Boolean result = artCommServ.unrateArtComment(commentID, userID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> unrateArtComment(@RequestBody Map<String, String> body) throws RecordNotFoundException {
+		try {
+			int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
+			int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
+			artCommServ.unrateArtComment(new ArtCommIDDTO(commentID), new UserIDDTO(userID));
+			return ResponseEntity.ok("User[" + userID + "] has unrated ArtComment[" + commentID + "] successfully!");
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().body("The values of the given IDs must be valid integers");
+		}
 	}
-	
+
 	@PostMapping(path = "/report")
-	public ResponseEntity<ReportArtComm> reportArtComment(ReportArtComm newReportArtComm){
+	public ResponseEntity<ReportArtComm> reportArtComment(@RequestBody ReportArtComm newReportArtComm)
+			throws AlreadyReportedException, RecordNotFoundException, SaveFailedException {
 		ReportArtComm result = artCommServ.reportArtComment(newReportArtComm);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@DeleteMapping(path = "/unreport")
-	public ResponseEntity<Boolean> unreportArtComment(@RequestBody Map<String, String> body){
-		int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
-		int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
-		Boolean result = artCommServ.unreportArtComment(commentID, userID);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<String> unreportArtComment(@RequestBody Map<String, String> body) throws RecordNotFoundException {
+		try {
+			int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
+			int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
+			artCommServ.unreportArtComment(new ArtCommIDDTO(commentID), new UserIDDTO(userID));
+			return ResponseEntity.ok("User[" + userID + "] has unrated ArtComment[" + commentID + "] successfully!");
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().body("The values of the given IDs must be valid integers");
+		}
 	}
 }

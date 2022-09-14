@@ -17,6 +17,7 @@ import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.PageNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
+import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
@@ -35,7 +36,7 @@ public class FanartController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Fanart> postFanart(@RequestBody ArtDTO newFanartDTO) {
+	public ResponseEntity<Fanart> postFanart(@RequestBody ArtDTO newFanartDTO) throws SaveFailedException {
 		Fanart newFanart = new Fanart(newFanartDTO);
 		Fanart result = artServ.postFanart(newFanart);
 		return ResponseEntity.ok(result);
@@ -103,7 +104,7 @@ public class FanartController {
 	}
 
 	@PostMapping(path = "/rate")
-	public ResponseEntity<RateFanart> rate(@RequestBody RateFanart newRateArt) throws AlreadyRatedException {
+	public ResponseEntity<RateFanart> rate(@RequestBody RateFanart newRateArt) throws AlreadyRatedException, RecordNotFoundException, SaveFailedException {
 		RateFanart result = artServ.rateFanart(newRateArt);
 		return ResponseEntity.ok(result);
 	}
@@ -121,7 +122,7 @@ public class FanartController {
 	}
 
 	@PostMapping(path = "/report")
-	public ResponseEntity<ReportFanart> reportFanart(ReportFanart newReportArt) throws AlreadyReportedException {
+	public ResponseEntity<ReportFanart> reportFanart(@RequestBody ReportFanart newReportArt) throws AlreadyReportedException, RecordNotFoundException, SaveFailedException {
 		ReportFanart result = artServ.reportFanart(newReportArt);
 		return ResponseEntity.ok(result);
 	}

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
+import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
@@ -22,8 +23,9 @@ public interface FanartInterface {
 	 * Saves a fanart to the database
 	 * @param rateFanart
 	 * @return
+	 * @throws SaveFailedException 
 	 */
-	public Fanart postFanart(Fanart newFanart);
+	public Fanart postFanart(Fanart newFanart) throws SaveFailedException;
 	
 	/**
 	 * Deletes the fanart with the given fanart ID
@@ -78,8 +80,10 @@ public interface FanartInterface {
 	 * @param rateFanart
 	 * @return
 	 * @throws AlreadyRatedException 
+	 * @throws RecordNotFoundException 
+	 * @throws SaveFailedException 
 	 */
-	public RateFanart rateFanart(RateFanart rateFanart) throws AlreadyRatedException;
+	public RateFanart rateFanart(RateFanart rateFanart) throws AlreadyRatedException, RecordNotFoundException, SaveFailedException;
 	
 	/**
 	 * Deletes the rating with a given comment ID and user ID
@@ -95,8 +99,10 @@ public interface FanartInterface {
 	 * @param rateFanart
 	 * @return
 	 * @throws AlreadyReportedException 
+	 * @throws RecordNotFoundException 
+	 * @throws SaveFailedException 
 	 */
-	public ReportFanart reportFanart(ReportFanart reportFanart) throws AlreadyReportedException;
+	public ReportFanart reportFanart(ReportFanart reportFanart) throws AlreadyReportedException, RecordNotFoundException, SaveFailedException;
 	
 	/**
 	 * Deletes the report with a given fanart ID and user ID

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.TransientPropertyValueException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
+import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportFanart;
@@ -46,8 +48,12 @@ public class FanartService implements FanartInterface {
 	}
 
 	@Override
-	public Fanart postFanart(Fanart newFanart) {
-		return artRepo.save(newFanart);
+	public Fanart postFanart(Fanart newFanart) throws SaveFailedException {
+		try {
+			return artRepo.save(newFanart);
+		} catch (Exception e) {
+			throw new SaveFailedException();
+		}
 	}
 
 	@Override
@@ -131,7 +137,7 @@ public class FanartService implements FanartInterface {
 	}
 
 	@Override
-	public RateFanart rateFanart(RateFanart newRateArt) throws AlreadyRatedException {
+	public RateFanart rateFanart(RateFanart newRateArt) throws AlreadyRatedException, RecordNotFoundException, SaveFailedException {
 		RateFanart result;
 		Fanart ratedArt;
 		ArtIDDTO artID = newRateArt.getArtID();
@@ -139,16 +145,16 @@ public class FanartService implements FanartInterface {
 		if (!rateArtRepo.existsByArtIDAndUserID(artID, userID)) {
 			// Save the new rating
 			try {
-				result = rateArtRepo.save(newRateArt);
-			} catch (Exception e) {
-				result = null;
-			}
+				result = rateArtRepo.save(newRateArt);				
 
-			// Add a like to the respective fanart if the rating saved
-			if (result != null) {
+				// Add a like to the respective fanart if the rating saved
 				ratedArt = artRepo.findById(newRateArt.getArtID().getId()).get();
 				ratedArt.setLikes(ratedArt.getLikes() + 1);
 				artRepo.save(ratedArt);
+			} catch (TransientPropertyValueException e) {
+				throw new RecordNotFoundException();
+			} catch (Exception e) {
+				throw new SaveFailedException();
 			}
 			return result;
 		} else {
@@ -178,7 +184,8 @@ public class FanartService implements FanartInterface {
 	}
 
 	@Override
-	public ReportFanart reportFanart(ReportFanart newReportArt) throws AlreadyReportedException {
+	public ReportFanart reportFanart(ReportFanart newReportArt)
+			throws AlreadyReportedException, RecordNotFoundException, SaveFailedException {
 		ReportFanart result;
 		Fanart reportedArt;
 		ArtIDDTO artID = newReportArt.getArtID();
@@ -186,17 +193,17 @@ public class FanartService implements FanartInterface {
 		if (!reportArtRepo.existsByArtIDAndUserID(artID, userID)) {
 			try {
 				result = reportArtRepo.save(newReportArt);
-			} catch (Exception e) {
-				result = null;
-			}
 
-			// Add a like to the respective fanart if the rating saved
-			if (result != null) {
+				// Add a report to the respective fanart if the report saved
 				reportedArt = artRepo.findById(newReportArt.getArtID().getId()).get();
 				reportedArt.setReports(reportedArt.getReports() + 1);
 				artRepo.save(reportedArt);
+				return result;
+			} catch (TransientPropertyValueException e) {
+				throw new RecordNotFoundException();
+			} catch (Exception e) {
+				throw new SaveFailedException();
 			}
-			return result;
 		} else {
 			throw new AlreadyReportedException("Fanart", artID.getId(), userID.getId());
 		}
@@ -208,7 +215,8 @@ public class FanartService implements FanartInterface {
 		Fanart unreportedArt;
 		try {
 			if (reportArtRepo.deleteByArtIDAndUserID(artID, userID) > 0) {
-				// Remove a report from the respective fanart if the amount of Reports is above zero
+				// Remove a report from the respective fanart if the amount of Reports is above
+				// zero
 				unreportedArt = artRepo.findById(artID.getId()).get();
 				if (unreportedArt.getReports() > 0) {
 					unreportedArt.setReports(unreportedArt.getReports() - 1);

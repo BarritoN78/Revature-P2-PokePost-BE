@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.personal.revaturep2pokepostbe.models.ReportArtComm;
+import com.personal.revaturep2pokepostbe.models.dtos.ArtCommIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 @Repository
 public interface ReportArtCommRepository extends JpaRepository<ReportArtComm, Integer>{
@@ -14,14 +16,14 @@ public interface ReportArtCommRepository extends JpaRepository<ReportArtComm, In
 	 * @param userID
 	 * @return
 	 */
-	boolean existsByCommentIDAndUserID(int commentID, int userID);
+	boolean existsByCommentIDAndUserID(ArtCommIDDTO commentID, UserIDDTO userID);
 	
 	/**
 	 * Deletes a report on a given comment made by a given user
-	 * @param commentID
-	 * @param userID
+	 * @param artCommIDDTO
+	 * @param userIDDTO
 	 * @return
 	 */
-	boolean deleteByCommentIDAndUserID(int commentID, int userID);
+	int deleteByCommentIDAndUserID(ArtCommIDDTO commentID, UserIDDTO userID);
 
 }
