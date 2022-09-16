@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyWishlistedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.Wishlist;
@@ -14,23 +15,28 @@ import com.personal.revaturep2pokepostbe.repositories.WishlistRepository;
 
 /**
  * A service class for the manipulation of wishlists
+ * 
  * @author Barry Norton
  *
  */
 @Service
-public class WishlistService implements WishlistInterface{
+public class WishlistService implements WishlistInterface {
 	private final WishlistRepository wishRepo;
-	
+
 	public WishlistService(WishlistRepository wishRepo) {
-		this.wishRepo = wishRepo;		
+		this.wishRepo = wishRepo;
 	}
 
 	@Override
-	public Wishlist addToWishlist(Wishlist newWish) throws SaveFailedException {
-		try {
-			return wishRepo.save(newWish);
-		} catch (Exception e) {
-			throw new SaveFailedException();
+	public Wishlist addToWishlist(Wishlist newWish) throws SaveFailedException, AlreadyWishlistedException {
+		if (!wishRepo.existsByPokeIdAndUserId(newWish.getPokeId(), newWish.getUserId())) {
+			try {
+				return wishRepo.save(newWish);
+			} catch (Exception e) {
+				throw new SaveFailedException();
+			}
+		} else {
+			throw new AlreadyWishlistedException();
 		}
 	}
 

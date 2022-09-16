@@ -22,7 +22,7 @@ public class Wishlist {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	private PokemonIDDTO pokeID;
+	private PokemonIDDTO pokeId;
 	@ManyToOne
-	private UserIDDTO userID;
+	private UserIDDTO userId;
 }

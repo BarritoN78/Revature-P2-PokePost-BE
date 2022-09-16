@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyWishlistedException;
 import com.personal.revaturep2pokepostbe.exceptions.PageNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
@@ -27,7 +28,7 @@ public class WishlistController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Wishlist> addToWishlist(@RequestBody Wishlist newWish) throws SaveFailedException {
+	public ResponseEntity<Wishlist> addToWishlist(@RequestBody Wishlist newWish) throws SaveFailedException, AlreadyWishlistedException {
 		Wishlist result = wishServ.addToWishlist(newWish);
 		return ResponseEntity.ok(result);
 	}

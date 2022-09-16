@@ -6,10 +6,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.personal.revaturep2pokepostbe.models.Wishlist;
+import com.personal.revaturep2pokepostbe.models.dtos.PokemonIDDTO;
 import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 @Repository
 public interface WishlistRepository extends JpaRepository<Wishlist, Integer>{
+	
+	/**
+	 * Returns a boolean representing the existence of an entity associated with both the user and pokemon ids
+	 * @param pokeId
+	 * @param userId
+	 * @return
+	 */
+	boolean existsByPokeIdAndUserId(PokemonIDDTO pokeId, UserIDDTO userId);
 
 	/**
 	 * Retrieves a page of a user's wishlist

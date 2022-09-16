@@ -2,6 +2,7 @@ package com.personal.revaturep2pokepostbe.services;
 
 import org.springframework.data.domain.Page;
 
+import com.personal.revaturep2pokepostbe.exceptions.AlreadyWishlistedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.Wishlist;
@@ -17,8 +18,9 @@ public interface WishlistInterface {
 	 * @param newWish
 	 * @return
 	 * @throws SaveFailedException 
+	 * @throws AlreadyWishlistedException 
 	 */
-	public Wishlist addToWishlist(Wishlist newWish) throws SaveFailedException;
+	public Wishlist addToWishlist(Wishlist newWish) throws SaveFailedException, AlreadyWishlistedException;
 	
 	/**
 	 * Deletes a wish from a user's wishlist
