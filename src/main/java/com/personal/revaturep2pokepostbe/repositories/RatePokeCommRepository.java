@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.personal.revaturep2pokepostbe.models.RatePokeComm;
+import com.personal.revaturep2pokepostbe.models.dtos.PokeCommIDDTO;
+import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 
 @Repository
 public interface RatePokeCommRepository extends JpaRepository<RatePokeComm, Integer>{
@@ -14,7 +16,7 @@ public interface RatePokeCommRepository extends JpaRepository<RatePokeComm, Inte
 	 * @param userID
 	 * @return
 	 */
-	boolean existsByCommentIDAndUserID(int commentID, int userID);
+	boolean existsByCommentIDAndUserID(PokeCommIDDTO commentID, UserIDDTO userID);
 	
 	/**
 	 * Deletes a rating on a given pokemon comment made by a given user
@@ -22,6 +24,6 @@ public interface RatePokeCommRepository extends JpaRepository<RatePokeComm, Inte
 	 * @param userID
 	 * @return
 	 */
-	boolean deleteByCommentIDAndUserID(int commentID, int userID);
+	int deleteByCommentIDAndUserID(PokeCommIDDTO commentID, UserIDDTO userID);
 
 }

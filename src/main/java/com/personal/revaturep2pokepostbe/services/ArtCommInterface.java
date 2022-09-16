@@ -1,6 +1,6 @@
 package com.personal.revaturep2pokepostbe.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
@@ -61,7 +61,7 @@ public interface ArtCommInterface {
 	 * @param artID
 	 * @return
 	 */
-	public List<ArtComment> getAllArtComments(int artID);
+	public Page<ArtComment> getArtCommentsByArtID(int artID, int page, int size);
 	
 	/**
 	 * Saves or updates a fanart comment

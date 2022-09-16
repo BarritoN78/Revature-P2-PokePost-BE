@@ -2,16 +2,20 @@ package com.personal.revaturep2pokepostbe.controllers;
 
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyRatedException;
 import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
+import com.personal.revaturep2pokepostbe.exceptions.PageNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.ArtComment;
@@ -28,6 +32,21 @@ public class ArtCommController {
 
 	public ArtCommController(ArtCommService artCommServ) {
 		this.artCommServ = artCommServ;
+	}
+
+	@GetMapping(path = "/{artId}")
+	public ResponseEntity<Page<ArtComment>> getArtCommentsByArtId(@PathVariable int artId, @RequestParam int page,
+			@RequestParam int size) throws PageNotFoundException {
+		try {
+			Page<ArtComment> result = artCommServ.getArtCommentsByArtID(artId, page, size);
+			if (result.hasContent()) {
+				return ResponseEntity.ok(result);
+			} else {
+				throw new PageNotFoundException(page);
+			}
+		} catch (IllegalArgumentException e) {
+			throw new PageNotFoundException(page);
+		}
 	}
 
 	@PostMapping
@@ -50,7 +69,8 @@ public class ArtCommController {
 	}
 
 	@DeleteMapping(path = "/unrate")
-	public ResponseEntity<String> unrateArtComment(@RequestBody Map<String, String> body) throws RecordNotFoundException {
+	public ResponseEntity<String> unrateArtComment(@RequestBody Map<String, String> body)
+			throws RecordNotFoundException {
 		try {
 			int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
 			int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));
@@ -69,7 +89,8 @@ public class ArtCommController {
 	}
 
 	@DeleteMapping(path = "/unreport")
-	public ResponseEntity<String> unreportArtComment(@RequestBody Map<String, String> body) throws RecordNotFoundException {
+	public ResponseEntity<String> unreportArtComment(@RequestBody Map<String, String> body)
+			throws RecordNotFoundException {
 		try {
 			int commentID = Integer.parseInt(body.getOrDefault("commentID", "-1"));
 			int userID = Integer.parseInt(body.getOrDefault("userID", "-1"));

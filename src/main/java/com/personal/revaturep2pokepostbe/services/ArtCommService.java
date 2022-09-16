@@ -1,8 +1,10 @@
 package com.personal.revaturep2pokepostbe.services;
 
-import java.util.List;
-
 import org.hibernate.TransientPropertyValueException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +13,7 @@ import com.personal.revaturep2pokepostbe.exceptions.AlreadyReportedException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
 import com.personal.revaturep2pokepostbe.exceptions.SaveFailedException;
 import com.personal.revaturep2pokepostbe.models.ArtComment;
-import com.personal.revaturep2pokepostbe.models.Fanart;
 import com.personal.revaturep2pokepostbe.models.RateArtComm;
-import com.personal.revaturep2pokepostbe.models.RateFanart;
 import com.personal.revaturep2pokepostbe.models.ReportArtComm;
 import com.personal.revaturep2pokepostbe.models.dtos.ArtCommIDDTO;
 import com.personal.revaturep2pokepostbe.models.dtos.ArtIDDTO;
@@ -85,7 +85,6 @@ public class ArtCommService implements ArtCommInterface {
 				throw new RecordNotFoundException();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RecordNotFoundException();
 		}
 	}
@@ -139,8 +138,9 @@ public class ArtCommService implements ArtCommInterface {
 	}
 
 	@Override
-	public List<ArtComment> getAllArtComments(int artID) {
-		return artCommRepo.findAll();
+	public Page<ArtComment> getArtCommentsByArtID(int artID, int page, int size) {
+		Pageable pageParams = PageRequest.of(page, size, Sort.by(Sort.Order.asc("id")));
+		return artCommRepo.findByArtId(new ArtIDDTO(artID),pageParams);
 	}
 
 	@Override
