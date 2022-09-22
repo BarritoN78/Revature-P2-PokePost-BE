@@ -12,7 +12,7 @@ import com.personal.revaturep2pokepostbe.models.Pokemon;
 import com.personal.revaturep2pokepostbe.services.PokemonService;
 
 
-@WebMvcTest
+@WebMvcTest(controllers = PokemonController.class)
 public class PokemonControllerTests {
 	private final PokemonService pokeServ;
 	

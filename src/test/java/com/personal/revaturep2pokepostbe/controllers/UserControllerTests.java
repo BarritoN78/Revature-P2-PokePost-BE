@@ -18,7 +18,7 @@ import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
 import com.personal.revaturep2pokepostbe.services.UserService;
 
 
-@WebMvcTest
+@WebMvcTest(controllers = UserController.class)
 public class UserControllerTests {
 	private final UserService userServ;
 	

@@ -20,7 +20,7 @@ import com.personal.revaturep2pokepostbe.models.Wishlist;
 import com.personal.revaturep2pokepostbe.services.WishlistService;
 
 
-@WebMvcTest
+@WebMvcTest(controllers = WishlistController.class)
 public class WishlistControllerTests {
 	private final WishlistService wishServ;
 

@@ -116,7 +116,9 @@ public class ArtCommControllerTests {
 
 	@Test
 	void deleteArtComment_RecordNotFound() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/comment/99"))
+		Mockito.when(artCommServ.deleteArtComment(99)).thenThrow(new RecordNotFoundException());		
+		
+		mockMvc.perform(MockMvcRequestBuilders.delete("/fanart/comment/99"))
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 	

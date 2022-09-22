@@ -27,7 +27,7 @@ import com.personal.revaturep2pokepostbe.models.dtos.UserIDDTO;
 import com.personal.revaturep2pokepostbe.services.PokeCommService;
 
 
-@WebMvcTest
+@WebMvcTest(controllers = PokeCommController.class)
 public class PokeCommControllerTests {
 	private final PokeCommService pokeCommServ;
 
