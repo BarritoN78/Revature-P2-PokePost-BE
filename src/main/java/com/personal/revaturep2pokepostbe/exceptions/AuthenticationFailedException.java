@@ -14,7 +14,7 @@ public class AuthenticationFailedException extends Exception {
         super ("The email or password entered is invalid!");
 	}
 	
-	public AuthenticationFailedException(String email) {
-        super ("The email["+ email +"] or password entered is invalid!");
+	public AuthenticationFailedException(String reason) {
+        super (reason);
 	}
 }

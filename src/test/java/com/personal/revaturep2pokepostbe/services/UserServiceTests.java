@@ -3,8 +3,10 @@ package com.personal.revaturep2pokepostbe.services;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
+import com.personal.revaturep2pokepostbe.RevatureP2PokepostBeApplication;
 import com.personal.revaturep2pokepostbe.exceptions.AuthenticationFailedException;
 import com.personal.revaturep2pokepostbe.exceptions.EmailAlreadyExistsException;
 import com.personal.revaturep2pokepostbe.exceptions.RecordNotFoundException;
@@ -13,17 +15,11 @@ import com.personal.revaturep2pokepostbe.models.User;
 import com.personal.revaturep2pokepostbe.models.dtos.UserDTO;
 import com.personal.revaturep2pokepostbe.repositories.UserRepository;
 
-/**
- * A service class for the manipulation of users
- * 
- * @author Barry Norton
- *
- */
-@Service
-public class UserService implements UserInterface {
+@SpringBootTest(classes=RevatureP2PokepostBeApplication.class)
+public class UserServiceTests implements UserInterface {
 	private final UserRepository userRepo;
 
-	public UserService(UserRepository userRepo) {
+	public UserServiceTests(UserRepository userRepo) {
 		this.userRepo = userRepo;
 	}
 
@@ -33,7 +29,7 @@ public class UserService implements UserInterface {
 		if (result.isPresent()) {
 			return result.get();
 		} else {
-			throw new AuthenticationFailedException("The email["+ email +"] or password entered is invalid!");
+			throw new AuthenticationFailedException(email);
 		}
 	}
 
