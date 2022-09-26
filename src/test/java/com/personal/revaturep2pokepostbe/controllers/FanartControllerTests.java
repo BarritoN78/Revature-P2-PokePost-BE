@@ -140,59 +140,120 @@ public class FanartControllerTests {
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/1?page=0&size=5"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
+	}	
+
+	/* ----------------------- */
+	/* getFilteredFanart Tests */
+	/* ----------------------- */
+	
+	@Test
+	void getFilteredFanart_ByTitleOk() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","title");
+		mockFilters.put("value", "mockTitle");
+		List<ArtDTO> mockResults = new ArrayList<ArtDTO>();
+		mockResults.add(new ArtDTO());
+		Page<ArtDTO> mockPage = new PageImpl<ArtDTO>(mockResults);
+		
+		Mockito.when(artServ.getFanartByTitle("mockTitle",0, 5)).thenReturn(mockPage);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=0&size=5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objMapper.writeValueAsString(mockFilters)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	void getFilteredFanart_ByTagsOk() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","tags");
+		mockFilters.put("value", "mockTags");
+		List<ArtDTO> mockResults = new ArrayList<ArtDTO>();
+		mockResults.add(new ArtDTO());
+		Page<ArtDTO> mockPage = new PageImpl<ArtDTO>(mockResults);
+		
+		Mockito.when(artServ.getFanartByTags("mockTags", 0, 5)).thenReturn(mockPage);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=0&size=5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objMapper.writeValueAsString(mockFilters)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	void getFilteredFanart_ByPostDateBeforeOk() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","dateBefore");
+		mockFilters.put("value", "2000-01-01");
+		List<ArtDTO> mockResults = new ArrayList<ArtDTO>();
+		mockResults.add(new ArtDTO());
+		Page<ArtDTO> mockPage = new PageImpl<ArtDTO>(mockResults);
+		
+		Mockito.when(artServ.getFanartByPostDate("2000-01-01", false, 0, 5)).thenReturn(mockPage);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=0&size=5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objMapper.writeValueAsString(mockFilters)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	void getFilteredFanart_ByPostDateAfterOk() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","dateAfter");
+		mockFilters.put("value", "2000-01-01");
+		List<ArtDTO> mockResults = new ArrayList<ArtDTO>();
+		mockResults.add(new ArtDTO());
+		Page<ArtDTO> mockPage = new PageImpl<ArtDTO>(mockResults);
+		
+		Mockito.when(artServ.getFanartByPostDate("2000-01-01", true, 0, 5)).thenReturn(mockPage);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=0&size=5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objMapper.writeValueAsString(mockFilters)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	void getFilteredFanart_DefaultOk() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","unknownFilter");
+		mockFilters.put("value", "mockValue");
+		List<ArtDTO> mockResults = new ArrayList<ArtDTO>();
+		mockResults.add(new ArtDTO());
+		Page<ArtDTO> mockPage = new PageImpl<ArtDTO>(mockResults);
+		
+		Mockito.when(artServ.getAllFanartByPage(0, 5)).thenReturn(mockPage);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=0&size=5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objMapper.writeValueAsString(mockFilters)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	@Test
-	void getAllFanart_NegativePageNotFound() throws Exception {
-		Mockito.when(artServ.getAllFanartByPage(-1, 5)).thenThrow(new IllegalArgumentException());
+	void getFilteredFanart_NegativePageNotFound() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","title");
+		mockFilters.put("value", "mockTitle");
+		Mockito.when(artServ.getFanartByTitle("mockTitle", -1, 5)).thenThrow(new IllegalArgumentException());
 		
-		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/1?page=-1&size=5"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=-1&size=5"))
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 
 	@Test
-	void getArtDTOByArtId_NoContentPageNotFound() throws Exception {
+	void getFilteredFanart_NoContentPageNotFound() throws Exception {
+		Map<String, String> mockFilters = new HashMap<String, String>();
+		mockFilters.put("field","title");
+		mockFilters.put("value", "mockTitle");
 		List<ArtDTO> mockResults = new ArrayList<ArtDTO>();
 		Page<ArtDTO> mockPage = new PageImpl<ArtDTO>(mockResults);
 		
-		Mockito.when(artServ.getAllFanartByPage(99, 5)).thenReturn(mockPage);
+		Mockito.when(artServ.getFanartByTitle("mockTitle", 99, 5)).thenReturn(mockPage);
 		
-		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/1?page=99&size=5"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/fanart/filter?page=99&size=5"))
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
-	}
-
-	@PostMapping(path = "/filter")
-	public ResponseEntity<Page<ArtDTO>> getFilteredFanart(@RequestBody Map<String, String> filters,
-			@RequestParam int page, @RequestParam int size) throws PageNotFoundException {
-		try {
-			Page<ArtDTO> result;
-			String field = filters.get("field");
-			String value = filters.get("value");
-			switch (field) {
-			case "title":
-				result = artServ.getFanartByTitle(value, page, size);
-				break;
-			case "tags":
-				result = artServ.getFanartByTags(value, page, size);
-				break;
-			case "dateAfter":
-				result = artServ.getFanartByPostDate(value, true, page, size);
-				break;
-			case "dateBefore":
-				result = artServ.getFanartByPostDate(value, false, page, size);
-				break;
-			default:
-				result = artServ.getAllFanartByPage(page, size);
-				break;
-			}
-			if (result.hasContent()) {
-				return ResponseEntity.ok(result);
-			} else {
-				throw new PageNotFoundException(page);
-			}
-		} catch (IllegalArgumentException e) {
-			throw new PageNotFoundException(page);
-		}
 	}
 			
 	/* ---------------- */
